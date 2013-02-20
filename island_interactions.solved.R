@@ -112,4 +112,8 @@ legend("topleft",
        lty = lty.gap[rep(c("matrix","embedded"),2)],
        lwd = 3, bty = "n", cex=0.75)
   
-
+### or ... Lattice/Histogram
+library(lattice)
+with(islands.df,
+     histogram(~ rating|comp + gapsite, 
+               type="density", breaks=1:7))
