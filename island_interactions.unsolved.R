@@ -69,7 +69,8 @@ with(islands.df,
                       response=rating))
 
 # Ratings data are not perfectly suited to untransformed linear models
-# (1) they are bounded (1-n)
+# Principally, this is because they are discrete and bounded (n categories at 1-n)
+# Practically, you can often use LMs, if you're not testing small differences at the edges
 # Check the residuals to see what happens at the tails ...
 qqnorm(resid(model.AxB))
 ks.test(scale(resid(model.AxB)), "pnorm")
@@ -83,7 +84,7 @@ names(col.comp) <- c("that", "whether")
 lty.gap <- c("solid", "dashed")
 names(lty.gap) <- c("matrix", "embedded")
 
-# Loop through the factor levels
+# Loop through the factor levels and create an ECDF plot
 # An embedded loop recaps a 2 x 2 design ...
 add.par <- FALSE
 for(comp.loop in c("that", "whether")){
