@@ -12,10 +12,10 @@ print(str(islands.raw))
 islands.df <- data.frame(rating = unlist(islands.raw))
 
 nrow(islands.raw) -> n.obs.percondition #hint
-islands.df$comp <- ...
-islands.df$gapsite <- ...
+islands.df$comp <- ...        # label the factor levels "that" and "whether"
+islands.df$gapsite <- ...     # label the factor levels "matrix" and "embedded"
 
-# turn the string values from above into 'factors'
+# turn the string values from above assignments into factors
 islands.df$comp <- factor(islands.df$comp)
 islands.df$gapsite <- factor(islands.df$gapsite)
 
