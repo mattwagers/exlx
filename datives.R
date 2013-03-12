@@ -30,5 +30,17 @@ am.I.a.PP <- wsj.predict > 0.0
 table(wsj$real=="PP", am.I.a.PP)
 
 ##### Cross-validate by splitting our sample randomly
+nrow(bresnan) -> n.obs
+# create 2 bresnans
+split(bresnan, factor(rbinom(n.obs, 1, 0.85))) -> bresnan.split
+# estimate model from the bigger bresnan
+bresnan.split$`1`
+glm(real ~ proth + prorec, 
+    data=bresnan.split$`1`, family=binomial) -> current.model
+# predict values of the smaller d.f.
+predict(current.model, bresnan.split$`0`) -> current.prediction
 
-
+# get accuracy
+match.to.data<-
+  (current.prediction>0.0)==(bresnan.split$`0`$real=="PP")
+mean(match.to.data) -> current.accuracy
