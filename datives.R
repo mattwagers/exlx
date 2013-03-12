@@ -16,3 +16,19 @@ mosaic(pron.theme, shade=TRUE)
 rbind(c(2104, 740), c(312,109)) ->expected
 
 mosaic(expected)
+
+##### Cross-validate against another sample
+subset(bresnan, mod=="wallstreet") -> wsj
+subset(bresnan, mod=="switchboard") -> switch
+
+# equiv: lmer(real~proth +prorec + (1|verb))
+switch.model <- glmmPQL(real ~ proth + prorec, 
+        random=~1|verb,
+        data=switch, family=binomial)
+predict(switch.model, wsj) -> wsj.predict
+am.I.a.PP <- wsj.predict > 0.0
+table(wsj$real=="PP", am.I.a.PP)
+
+##### Cross-validate by splitting our sample randomly
+
+
