@@ -9,4 +9,5 @@ install.packages("MASS")
 library(MASS)
 
 
-with(bresnan, table(prorec, proth, real)) -> pronominals
+with(bresnan, table(proth, real)) -> pron.theme
+with(bresnan, table(prorec, real)) -> pron.recip
