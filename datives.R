@@ -39,7 +39,6 @@ for(i in 1:100){
   setTxtProgressBar(pb, i)
   split(bresnan, factor(rbinom(n.obs, 1, 0.85))) -> bresnan.split
 # estimate model from the bigger bresnan
-  bresnan.split$`1`
   glm(real ~ proth + prorec, 
       data=bresnan.split$`1`, family=binomial) -> current.model
 # predict values of the smaller d.f.
@@ -51,3 +50,10 @@ for(i in 1:100){
   mean(match.to.data) -> accuracies[i]
 
 }
+
+split(bresnan, factor(rbinom(n.obs, 1, 0.85))) -> bresnan.split
+glm(real ~ proth + prorec +ldiff, 
+    data=bresnan.split$`1`, family=binomial) -> current.model
+predict(current.model, bresnan.split$`0`) -> current.prediction
+match.to.data<-
+  (current.prediction>0.0)==(bresnan.split$`0`$real=="PP")
