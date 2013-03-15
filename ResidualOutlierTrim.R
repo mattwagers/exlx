@@ -24,7 +24,6 @@ ResidualOutlierTrim <- function(fitted.model, z.criterion=2, plot.it=FALSE){
   
   if(plot.it){
     
-    dev.off()
     par(mfrow=c(1,2))
     
     test.0 <- shapiro.test(resid(fitted.model))
@@ -42,7 +41,6 @@ ResidualOutlierTrim <- function(fitted.model, z.criterion=2, plot.it=FALSE){
     plot.text <- paste("Theoretical Quantiles",
                        "\n (Shap.-Wilk test W: ",round(test.1$statistic,3), 
                        ", p: ", round(test.1$p.value,3),")", sep="")
-    par=c(5,2,2,2)
     qqnorm(resid(new.model), main=title.text, xlab=plot.text)
     qqline(resid(new.model))   
 
