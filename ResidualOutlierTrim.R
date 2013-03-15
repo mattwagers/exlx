@@ -29,19 +29,20 @@ ResidualOutlierTrim <- function(fitted.model, z.criterion=2, plot.it=FALSE){
     test.0 <- shapiro.test(resid(fitted.model))
     test.1 <- shapiro.test(resid(new.model))
     
-    plot.text <- paste("Theoretical Quantiles",
-                       "\n (Shap.-Wilk test W: ",round(test.0$statistic,3), 
-                       ", p: ", round(test.0$p.value,3),")", sep="")
-    qqnorm(resid(fitted.model), main="Original model",xlab=plot.text)
+    plot.text <- function(test){
+       paste("Theoretical Quantiles",
+            "\n (Shap.-Wilk test W: ",round(test$statistic,3), 
+            ", p: ", round(test$p.value,3),")", sep="")
+    }
+    
+    
+    qqnorm(resid(fitted.model), main="Original model",xlab=plot.text(test.0))
     qqline(resid(fitted.model))
     abline(h=c(-1,1)*z.criterion, 
            col="darkgrey", lty="dashed", lwd=2)
    
     title.text <- paste("Re-fitted model\n",pct.trimmed,"% trim")
-    plot.text <- paste("Theoretical Quantiles",
-                       "\n (Shap.-Wilk test W: ",round(test.1$statistic,3), 
-                       ", p: ", round(test.1$p.value,3),")", sep="")
-    qqnorm(resid(new.model), main=title.text, xlab=plot.text)
+    qqnorm(resid(new.model), main=title.text, xlab=plot.text(test.1))
     qqline(resid(new.model))   
 
     
